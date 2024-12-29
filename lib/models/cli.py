@@ -4,18 +4,19 @@ from director import Director
 from movie import Movie
 
 
-# See main menu
-# welcome message, options:
-# 0 exit program
-# 1 See all stars
-# 2 See all movies
-# 3 See all directors
-# when see all stars (1), options:
-# 0 exit program
-# 1 add/ create new star
-# 2 find star by id
-# 3 update star
-# 4 delete star
+# See main menux
+# welcome message, options:x
+# 0 exit programx
+# 1 See all starsx
+# 2 See all moviesx
+# 3 See all directorsx
+# when see all stars (1), options:x
+# 0 exit programx
+# 1 add/ create new starx
+# 2 find star by idx
+# 3 update starx
+# 4 delete starx
+
 # when find by id(2), get all others and options:
 # 0 exit program
 # 1 average gross
@@ -64,16 +65,42 @@ def main():
                 starid = int(input("\n Enter star ID: "))
                 star_by_id = Star.find_by_id(starid)
                 print(f"\n***{star_by_id.name} | {star_by_id.rate_per_movie:.2f}***")
+                print("\nBack to main menu.")
             elif choice2 == "3":
-                pass
+                print("\nUpdate star")
+                print("\nFind star to delete by id: ")
+                staridupdate = int(input("\n Enter star ID: "))
+                star_by_id_update = Star.find_by_id(staridupdate)
+                star_by_id_update.name = input("Update name: ")
+                star_by_id_update.rate_per_movie = float(
+                    input("Update earnings per movie: ")
+                )
+                star_by_id_update.update()
+                print(
+                    f"{star_by_id_update.name} | ${star_by_id_update.rate_per_movie:.2f}"
+                )
             elif choice2 == "4":
-                pass
+                print("\nDelete star")
+                print("\nFind star to delete by id: ")
+                stariddelete = int(input("\n Enter star ID: "))
+                star_to_delete = Star.find_by_id(stariddelete)
+                star_to_delete.delete()
+
             else:
                 print("Invalid choice")
         elif choice == "2":
-            pass
+            all_movies = Movie.get_all_movies()
+            for movie in all_movies:
+                print(
+                    f"{movie.title} | {movie.star_id} | {movie.director_id} | ${movie.box_office:.2f} | {movie.genre}"
+                )
         elif choice == "3":
-            pass
+            all_directors = Director.get_all_directors()
+            for director in all_directors:
+                print(
+                    f"{director.id} | {director.name} | ${director.royalties_per_film:.2f}"
+                )
+
         else:
             print("Invalid choice")
 
