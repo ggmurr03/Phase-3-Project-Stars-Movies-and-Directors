@@ -128,7 +128,7 @@ class Star:
         return f"{total/count:.2f}"
 
     def movies(self):
-        return [movie.name for movie in Movie.all if movie.star_id == self.id]
+        return set([movie.title for movie in Movie.all if movie.star_id == self.id])
 
     def top_grossing_movie(self):
         star_movies = [movie for movie in Movie.all if movie.star_id == self.id]
@@ -138,4 +138,4 @@ class Star:
 
         top_movie = max(star_movies, key=lambda movie: movie.box_office)
 
-        return top_movie
+        return top_movie.title

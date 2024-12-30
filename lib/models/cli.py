@@ -18,13 +18,14 @@ from movie import Movie
 # 4 delete starx
 
 # when find by id(2), get all others and options:
-# 0 exit program
-# 1 average gross
-# 2 movies
-# 3 topgrossing movie
+# 0 exit programx
+# 1 average grossx
+# 2 moviesx
+# 3 topgrossing moviex
+
+
 # when 3 see all directors:
-# 0 exit
-# 1 find by id
+
 # 1, get all others then:
 # 0 exit
 # 1 total royalties
@@ -68,7 +69,7 @@ def main():
                 print("\nBack to main menu.")
             elif choice2 == "3":
                 print("\nUpdate star")
-                print("\nFind star to delete by id: ")
+                print("\nFind star to update by id: ")
                 staridupdate = int(input("\n Enter star ID: "))
                 star_by_id_update = Star.find_by_id(staridupdate)
                 star_by_id_update.name = input("Update name: ")
@@ -85,6 +86,32 @@ def main():
                 stariddelete = int(input("\n Enter star ID: "))
                 star_to_delete = Star.find_by_id(stariddelete)
                 star_to_delete.delete()
+            elif choice2 == "5":
+                print(
+                    "\n0. Exit the program \n1. Average gross \n2. Star's movies \n3. Star's top grossing movie \n"
+                )
+                movie_list = Movie.get_all_movies()
+                choice3 = input(">")
+                if choice3 == "0":
+                    exit_program()
+                elif choice3 == "1":
+                    print("\nFind star by id: ")
+                    staridaverage = int(input("\n Enter star ID: "))
+                    star_for_movies_average = Star.find_by_id(staridaverage)
+                    print(star_for_movies_average.average_gross())
+
+                elif choice3 == "2":
+                    print("\nFind star by id: ")
+                    staridformovies = int(input("\n Enter star ID: "))
+                    star_for_movies = Star.find_by_id(staridformovies)
+                    print(star_for_movies.movies())
+                elif choice3 == "3":
+                    print("\nFind star by id: ")
+                    staridfortop = int(input("\n Enter star ID: "))
+                    star_for_top_grossing = Star.find_by_id(staridfortop)
+                    print(star_for_top_grossing.top_grossing_movie())
+                else:
+                    print("Invalid choice")
 
             else:
                 print("Invalid choice")
@@ -95,17 +122,55 @@ def main():
                     f"{movie.title} | {movie.star_id} | {movie.director_id} | ${movie.box_office:.2f} | {movie.genre}"
                 )
         elif choice == "3":
+            all_movies = Movie.get_all_movies()
+            all_stars = Star.get_all_stars()
             all_directors = Director.get_all_directors()
             for director in all_directors:
                 print(
                     f"{director.id} | {director.name} | ${director.royalties_per_film:.2f}"
                 )
 
+            print(
+                "\nSelect your choice: \n0. Exit the program \n1. Director's total royalties \n2. Associated stars \n3. Director's movies \n4. Director's total gross"
+            )
+            choice4 = input(">")
+            if choice4 == "0":
+                exit_program()
+
+            elif choice4 == "1":
+                print("Find director by ID ")
+                director_id = int(input("Enter ID: "))
+                director_total_royalties = Director.find_by_id(director_id)
+                print(director_total_royalties.total_royalties())
+            elif choice4 == "2":
+                print("Find director by ID ")
+                director_id = int(input("Enter ID: "))
+                director_stars = Director.find_by_id(director_id)
+                print(director_stars.stars_worked_with())
+            elif choice4 == "3":
+                print("Find director by ID ")
+                director_id = int(input("Enter ID: "))
+                director_movies = Director.find_by_id(director_id)
+                print(director_movies.movies())
+            # elif choice4 == "4":
+            #     print("Find director by ID ")
+            #     director_id = int(input("Enter ID: "))
+            #     director_total_gross = Director.find_by_id(director_id)
+            #     print(director_total_gross.total_gross())
+            else:
+                print("Invalid choice")
         else:
             print("Invalid choice")
 
 
 def menu1():
+    print(
+        """
+   /___\_ __     / __(_) |_ __ ___  
+ //  // '_ \   / _\ | | | '_ ` _ \ 
+/ \_//| | | | / /   | | | | | | | |
+\___/ |_| |_| \/    |_|_|_| |_| |_|"""
+    )
     print(
         "\nWelcome to the film database, where you can explore \nmovies, their stars and directors and \nexecute CRUD, association, and aggregate operations."
     )
@@ -115,8 +180,16 @@ def menu1():
 
 
 def menu2():
+    # print(
+    #     """
+    # / _\ |_ __ _ _ __ ___
+    # \ \| __/ _` | '__/ __|
+    # _\ \ || (_| | |  \__ \
+    # \__/\__\__,_|_|  |___/
+    #       """
+    # )
     print(
-        "\nSelect your choice: \n0. Exit the program \n1. Add new star \n2. Find star by id \n3. Update star \n4. Delete star"
+        "\nSelect your choice: \n0. Exit the program \n1. Add new star \n2. Find star by id \n3. Update star \n4. Delete star \n5. More..."
     )
 
 

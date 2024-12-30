@@ -70,17 +70,32 @@ class Director:
         director.save()
         return director
 
+    @classmethod
+    def find_by_id(cls, id):
+        sql = """
+            SELECT * FROM directors
+            WHERE id = ?
+            LIMIT 1;
+        """
+        row = CURSOR.execute(sql, (id,)).fetchone()
+        if not row:
+            return None
+        return cls.instance_from_db(row)
+
     def total_royalties(self):
-        count_list = [1 for movie in Movie.all if movie.director_id == self.id]
-        return f"{self.royalties_per_film * sum(count_list):.2f}"
+
+        directed_movies = [
+            movie for movie in Movie.get_all_movies() if movie.director_id == self.id
+        ]
+        return f"${self.royalties_per_film * len(directed_movies):.2f}"
 
     def stars_worked_with(self):
         directed_movies = [movie for movie in Movie.all if movie.director_id == self.id]
         star_ids = set([movie.star_id for movie in directed_movies])
-        return [Star.find_by_id(star_id) for star_id in star_ids]
+        return [Star.find_by_id(star_id).name for star_id in star_ids]
 
     def movies(self):
-        return [movie.name for movie in Movie.all if movie.director_id == self.id]
+        return set([movie.title for movie in Movie.all if movie.director_id == self.id])
 
     def total_gross(self):
-        return f"{sum([movie.box_office for movie in Movie.all if movie.director_id == self.id]):.2f}"
+        return f"${sum([float(movie.box_office) for movie in Movie.get_all_movies() if movie.director_id == self.id]):.2f}"
