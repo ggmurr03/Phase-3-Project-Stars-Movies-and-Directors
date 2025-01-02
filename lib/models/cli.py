@@ -67,7 +67,7 @@ def main():
             elif choice2 == "1":
                 print("\nAdd new star:")
                 star_name = input("Enter star name: ")
-                star_rate = float(input("Enter rate per movie: 1"))
+                star_rate = float(input("Enter rate per movie: "))
                 new_star = Star.create(star_name, star_rate)
                 print(f"\n***{new_star.name} | ${new_star.rate_per_movie:.2f}***")
                 print("\nBack to main menu.")
